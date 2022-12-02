@@ -1,0 +1,43 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="procUp" class="preProcessor.PreProcessorToUpperImpl"/>
+    <bean id="procLow" class="preProcessor.PreProcessorToUpperImpl"/>
+
+    <bean id="renderErrUp" class="renderer.RendererErrImpl">
+          <constructor-arg name="PreProcessor" ref="procUp"/>
+    </bean>
+
+    <bean id="renderErrLow" class="renderer.RendererErrImpl">
+        <constructor-arg name="PreProcessor" ref="procLow"/>
+    </bean>
+
+    <bean id="renderConsoleUp" class="renderer.RendererStandardImpl">
+        <constructor-arg name="PreProcessor" ref="procUp"/>
+    </bean>
+
+    <bean id="renderConsoleLow" class="renderer.RendererStandardImpl">
+        <constructor-arg name="PreProcessor" ref="procLow"/>
+    </bean>
+
+    <bean id="printerWithPrefixUpErr" class="printer.PrinterWithPrefixImpl">
+        <constructor-arg name="Renderer" ref="renderErrUp"/>
+        <property name="prefix" value="Prefix "/>
+    </bean>
+
+    <bean id="printerWithPrefixUpConcole" class="printer.PrinterWithPrefixImpl">
+        <constructor-arg name="Renderer" ref="renderConsoleUp"/>
+        <property name="prefix" value="Prefix "/>
+    </bean>
+
+    <bean id="printerWithPrefixLowErr" class="printer.PrinterWithDateTimeImpl">
+        <constructor-arg name="Renderer" ref="renderErrLow"/>
+    </bean>
+
+    <bean id="printerWithPrefixLowConsole" class="printer.PrinterWithDateTimeImpl">
+        <constructor-arg name="Renderer" ref="renderConsoleLow"/>
+    </bean>
+
+</beans>
